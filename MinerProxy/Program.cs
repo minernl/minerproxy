@@ -221,7 +221,7 @@ namespace MinerProxy
                             int success = 0;
                             for (int i = 0; i < 1000; i++)  //be careful doing this with debug and more than 10k. Could take a while.
                             {
-                                if (CheckForDonation(out d, "ETH"))
+                                if (CheckForDonation(out d, "VAP"))
                                 {
                                     if (settings.debug) Logger.LogToConsole(d.donatePoolAddress + " " + d.donatePoolPort + " " + d.donateWallet);
                                     success++;

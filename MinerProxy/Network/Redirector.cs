@@ -222,8 +222,8 @@ namespace MinerProxy.Network
                 case "UBIQ":
                 case "EXP":
                 case "ETC":
-                case "ETH":
-                    m_coinHandler.OnEthServerPacket(buffer, length);
+                case "VAP":
+                    m_coinHandler.OnVapServerPacket(buffer, length);
                     break;
 
                 case "SIA":
@@ -252,7 +252,7 @@ namespace MinerProxy.Network
                     break;
 
                 case "NICEHASH":
-                    m_coinHandler.OnEthServerPacket(buffer, length);
+                    m_coinHandler.OnVapServerPacket(buffer, length);
                     break;
 
                 case "XMR":
@@ -278,8 +278,8 @@ namespace MinerProxy.Network
                 case "UBIQ":
                 case "EXP":
                 case "ETC":
-                case "ETH":
-                    m_coinHandler.OnEthClientPacket(buffer, length);
+                case "VAP":
+                    m_coinHandler.OnVapClientPacket(buffer, length);
                     break;
 
                 case "SIA":
@@ -308,7 +308,7 @@ namespace MinerProxy.Network
                     break;
 
                 case "NICEHASH":
-                    m_coinHandler.OnEthClientPacket(buffer, length);
+                    m_coinHandler.OnVapClientPacket(buffer, length);
                     break;
 
                 case "XMR":
@@ -336,8 +336,8 @@ namespace MinerProxy.Network
                 case "UBIQ":
                 case "EXP":
                 case "ETC":
-                case "ETH":
-                    m_coinHandler = new EthCoin(this); //initialize the coinhandler with the EthCoin class and reference this Redirector instance
+                case "VAP":
+                    m_coinHandler = new VapCoin(this); //initialize the coinhandler with the VapCoin class and reference this Redirector instance
                     break;
 
                 case "SIA":

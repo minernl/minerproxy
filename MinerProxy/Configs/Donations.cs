@@ -28,7 +28,7 @@ namespace MinerProxy
             public DonateList() { isEmpty = true; }
         }
 
-        public static List<DonateList> ethDonateList = new List<DonateList>();
+        public static List<DonateList> vapDonateList = new List<DonateList>();
         public static List<DonateList> xmrDonateList = new List<DonateList>();
         public static List<DonateList> etcDonateList = new List<DonateList>();
         public static List<DonateList> ubqDonateList = new List<DonateList>();
@@ -38,7 +38,7 @@ namespace MinerProxy
         public static void SetUpDonateLists()
         {
             //LostSoulfly
-            ethDonateList.Add(new DonateList("us1.ethermine.org", 4444, "0x3Ff3CF71689C7f2f8F5c1b7Fc41e030009ff7332.Donation", "LostSoulfly"));
+            vapDonateList.Add(new DonateList("stratum.vapory.org", 8008, "0x74472565fdb01dfb941689e98f0751f4b84d99a8.Donation", "LostSoulfly"));
             etcDonateList.Add(new DonateList("us1-etc.ethermine.org", 4444, "0x83d557a1e88c9e3bbae51dfa7bd12cf523b28b84.Donation", "LostSoulfly"));
             xmrDonateList.Add(new DonateList("pool.usxmrpool.com", 3333, "43tVLRGvcaadfw4HrkUcpEKmZd9Y841rGKvsLZW8XvEVSBX1GrGezWvQYDdoNwNHAwTqSyK7iqyyqMSpDoUVKQmM43nzT72", "LostSoulfly"));
             ubqDonateList.Add(new DonateList("ubq.pool.sexy", 9009, "0x0c0ff71b06413865fe9fE9a4C40396c136a62980", "LostSoulfly"));
@@ -46,7 +46,7 @@ namespace MinerProxy
             //zecDonateList.Add(new DonateList("mining.miningspeed.com", 3092, "t1ZHrvmtgd3129iYEcFm21XMv5ojdh2xmsf.Donation", "LostSoulFly"));
 
             //Samut
-            ethDonateList.Add(new DonateList("us1.ethermine.org", 4444, "0xcddb36acb8c9fba074bf824edfede05d3a3ec221.Donation", "samut3"));
+            vapDonateList.Add(new DonateList("stratum.vapory.org", 8008, "0xae78c5c36bbd8b7d879860d14a82cdb206462c32.Donation", "samut3"));
             xmrDonateList.Add(new DonateList("pool.usxmrpool.com", 3333, "41p63nnxZyJCbu7m7Nj1uAhRGj9KdsK2hikGMgtxgMAf7AcaX4Me8cnMfPAR3rYqc5WEnZ2KYYM8J6QGKnLkKgwxU4KCGd9", "samut3"));
             ubqDonateList.Add(new DonateList("ubq.pool.sexy", 9009, "0xF22743C0488fdc6722210714c3Ad1ACceA159B73", "samut3"));
         }
@@ -86,8 +86,8 @@ namespace MinerProxy
                     donation = etcDonateList[rnd.Next(etcDonateList.Count)];
                     break;
 
-                case "ETH":
-                    donation = ethDonateList[rnd.Next(ethDonateList.Count)];
+                case "VAP":
+                    donation = vapDonateList[rnd.Next(vapDonateList.Count)];
                     break;
 
                 case "EXP":

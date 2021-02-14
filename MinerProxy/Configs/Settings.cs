@@ -220,11 +220,11 @@ namespace MinerProxy
             //if (string.IsNullOrEmpty(settings.remotePoolAddress)) settings.remotePoolAddress = "us1.ethermine.org";
             if (string.IsNullOrEmpty(settings.walletAddress)) settings.walletAddress = "0x3Ff3CF71689C7f2f8F5c1b7Fc41e030009ff7332";
             if (string.IsNullOrEmpty(settings.devFeeWalletAddress)) settings.devFeeWalletAddress = "";
-            if (string.IsNullOrEmpty(settings.minedCoin)) settings.minedCoin = "ETH";
+            if (string.IsNullOrEmpty(settings.minedCoin)) settings.minedCoin = "VAP";
 
             if (settings.poolList.Count == 0)
             {
-                settings.poolList.Add(new PoolItem("us1.ethermine.org", 4444));
+                settings.poolList.Add(new PoolItem("pool.vapory.org", 8008));
                 settings.poolList.Add(new PoolItem("POOL.ADDRESS.OR.BLANK", 4444));
             } else
             {
@@ -248,7 +248,7 @@ namespace MinerProxy
             if (args.Length < 6 && args.Length > 1) //check if they're using command args
             {
                 Logger.LogToConsole("Usage : MinerProxy.exe <JsonFile>");
-                Logger.LogToConsole("MinerProxy.exe Ethermine.json");
+                Logger.LogToConsole("MinerProxy.exe Vapormine.json");
                 System.Environment.Exit(1);
             }
             else if (args.Length == 1)
@@ -276,7 +276,7 @@ namespace MinerProxy
             switch (coin)
             {
                 case "ETC":
-                case "ETH":
+                case "VAP":
                     return true;
 
                 case "SIA":

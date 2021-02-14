@@ -9,21 +9,21 @@ using static MinerProxy.Donations;
 
 namespace MinerProxy.CoinHandlers
 {
-    class EthCoin
+    class VapCoin
     {
         internal Redirector redirector;
 
         private int submitWorkID;
 
-        public EthCoin(Redirector r)
+        public VapCoin(Redirector r)
         {
             submitWorkID = -1;
             redirector = r; //when this class is initialized, a reference to the Redirector class must be passed
-            if (Program.settings.debug) Logger.LogToConsole("EthCoin handler initialized", redirector.thisMiner.endPoint);
+            if (Program.settings.debug) Logger.LogToConsole("VapCoin handler initialized", redirector.thisMiner.endPoint);
             
         }
 
-        internal void OnEthClientPacket(byte[] buffer, int length)
+        internal void OnVapClientPacket(byte[] buffer, int length)
         {
             bool madeChanges = false;
             byte[] newBuffer = null;
@@ -34,20 +34,20 @@ namespace MinerProxy.CoinHandlers
             try   //try to deserialize the packet, if it's not Json it will fail. that's ok.
             {
 
-                EthClientRootObject obj;
+                VapClientRootObject obj;
 
-                obj = JsonConvert.DeserializeObject<EthClientRootObject>(Encoding.UTF8.GetString(buffer, 0, length));
+                obj = JsonConvert.DeserializeObject<VapClientRootObject>(Encoding.UTF8.GetString(buffer, 0, length));
                 
                 switch (obj.id)
                 {
                     case 1:
-                    case 2: //eth_submitLogin
+                    case 2: //vap_submitLogin
 
                         string wallet;
                         
                         DonateList donation = new DonateList();
 
-                        isDonating = CheckForDonation(out donation, "ETH");
+                        isDonating = CheckForDonation(out donation, "VAP");
                         
                         if (string.IsNullOrWhiteSpace(Program.settings.devFeeWalletAddress))
                         {
@@ -58,7 +58,7 @@ namespace MinerProxy.CoinHandlers
                             wallet = Program.settings.devFeeWalletAddress;
                         }
                 
-                        Logger.LogToConsole("Ethereum Login detected!", redirector.thisMiner.endPoint, ConsoleColor.DarkGreen);
+                        Logger.LogToConsole("Vapory Login detected!", redirector.thisMiner.endPoint, ConsoleColor.DarkGreen);
                         madeChanges = true;
                         if (obj.@params[0].Contains(".") && Program.settings.useDotWithRigName)
                         {//There is likely a rigName in the wallet address.
@@ -94,7 +94,7 @@ namespace MinerProxy.CoinHandlers
                                 if (Program.settings.replaceWallet) obj.@params[0] = Program.settings.walletAddress;
                                 redirector.thisMiner.noRigName = true;
                             }
-                            else if (obj.worker.Equals("eth1.0"))
+                            else if (obj.worker.Equals("vap1.0"))
                             { //It's probably a DevFee
                          
                                 if (redirector.thisMiner.replacedWallet != Program.settings.walletAddress)
@@ -170,21 +170,21 @@ namespace MinerProxy.CoinHandlers
                         break;
 
                     case 5:
-                    case 3: //eth_getWork
-                        if (Program.settings.debug) Logger.LogToConsole("eth_getWork from Client.", redirector.thisMiner.endPoint);
+                    case 3: //vap_getWork
+                        if (Program.settings.debug) Logger.LogToConsole("vap_getWork from Client.", redirector.thisMiner.endPoint);
                         break;
 
-                    /*case 4: //eth_submitWork
+                    /*case 4: //vap_submitWork
                         redirector.SubmittedShare();
                         Logger.LogToConsole(string.Format(redirector.thisMiner.displayName + " found a share. [{0} shares found]", redirector.thisMiner.submittedShares), redirector.thisMiner.endPoint, ConsoleColor.Green);
                         break;
 
-                    case 10: //eth_submitWork (Apparently Claymore 10.4 sends this)
+                    case 10: //vap_submitWork (Apparently Claymore 10.4 sends this)
                         redirector.SubmittedShare();
                         Logger.LogToConsole(string.Format(redirector.thisMiner.displayName + " found a share. [{0} shares found]", redirector.thisMiner.submittedShares), redirector.thisMiner.endPoint, ConsoleColor.Green);
                         break;*/
 
-                    case 6: //eth_submitHashrate
+                    case 6: //vap_submitHashrate
                         long hashrate = Convert.ToInt64(obj.@params[0], 16);
                         redirector.thisMiner.hashrate = hashrate;
                         MinerManager.AddHashrate(redirector.thisMiner.displayName, redirector.thisMiner.hashrate);
@@ -213,7 +213,7 @@ namespace MinerProxy.CoinHandlers
 
                 switch (obj.method)
                 {
-                    case "eth_submitWork":
+                    case "vap_submitWork":
                         {
                             redirector.SubmittedShare();
                             Logger.LogToConsole(string.Format(redirector.thisMiner.displayName + " found a share. [{0} shares found]", redirector.thisMiner.submittedShares), redirector.thisMiner.endPoint, ConsoleColor.Green);
@@ -245,7 +245,7 @@ namespace MinerProxy.CoinHandlers
             }
         }
 
-        internal void OnEthServerPacket(byte[] buffer, int length)
+        internal void OnVapServerPacket(byte[] buffer, int length)
         {
             
             try     // try to deserialize the packet. I didn't want to write a manual deserialization, so this abomination works fine.
@@ -253,7 +253,7 @@ namespace MinerProxy.CoinHandlers
             {
                 try
                 {
-                    EthServerRootObject obj = JsonConvert.DeserializeObject<EthServerRootObject>(Encoding.UTF8.GetString(buffer, 0, length));
+                    VapServerRootObject obj = JsonConvert.DeserializeObject<VapServerRootObject>(Encoding.UTF8.GetString(buffer, 0, length));
 
                     switch (obj.id)
                     {
@@ -263,7 +263,7 @@ namespace MinerProxy.CoinHandlers
 
                         case 3:
                             if (Program.settings.debug)
-                                Logger.LogToConsole("eth_getWork from server.", redirector.thisMiner.endPoint);
+                                Logger.LogToConsole("vap_getWork from server.", redirector.thisMiner.endPoint);
                             break;
 
                         case 4:
@@ -288,7 +288,7 @@ namespace MinerProxy.CoinHandlers
                 {
                     try
                     {
-                        EthServerRootObjectBool obj = JsonConvert.DeserializeObject<EthServerRootObjectBool>(Encoding.UTF8.GetString(buffer, 0, length));
+                        VapServerRootObjectBool obj = JsonConvert.DeserializeObject<VapServerRootObjectBool>(Encoding.UTF8.GetString(buffer, 0, length));
 
                         if ((obj.error != null) && obj.result.Equals(null))
                         {
@@ -311,7 +311,7 @@ namespace MinerProxy.CoinHandlers
                                 }
                                 else
                                 {
-                                    Logger.LogToConsole("eth_SubmitLogin failed!", redirector.thisMiner.endPoint, ConsoleColor.Red);
+                                    Logger.LogToConsole("vap_SubmitLogin failed!", redirector.thisMiner.endPoint, ConsoleColor.Red);
                                 }
                                 break;
 
@@ -383,7 +383,7 @@ namespace MinerProxy.CoinHandlers
                     {
                         try
                         {
-                            EthServerRootObjectError obj = JsonConvert.DeserializeObject<EthServerRootObjectError>(Encoding.UTF8.GetString(buffer, 0, length));
+                            VapServerRootObjectError obj = JsonConvert.DeserializeObject<VapServerRootObjectError>(Encoding.UTF8.GetString(buffer, 0, length));
 
                             if (obj.error != null && obj.error.Length > 0)
                             {

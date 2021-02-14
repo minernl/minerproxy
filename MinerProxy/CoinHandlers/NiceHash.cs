@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using MinerProxy.Logging;
 using MinerProxy.Network;
 
-// NiceHash only for DaggerHashimoto (ETH) algorithm
+// NiceHash only for DaggerHashimoto (VAP) algorithm
 
 namespace MinerProxy.CoinHandlers
 {
@@ -20,7 +20,7 @@ namespace MinerProxy.CoinHandlers
             if (Program.settings.debug) Logger.LogToConsole("NiceHash handler initialized", redirector.thisMiner.endPoint);
         }
 
-        internal void OnEthClientPacket(byte[] buffer, int length)
+        internal void OnVapClientPacket(byte[] buffer, int length)
         {
             bool madeChanges = false;
             byte[] newBuffer = null;
@@ -37,7 +37,7 @@ namespace MinerProxy.CoinHandlers
                         case "mining.authorize":
                             if (dyn.@params != null)
                             {
-                                Logger.LogToConsole("Ethereum Login detected!", redirector.thisMiner.endPoint, ConsoleColor.DarkGreen);
+                                Logger.LogToConsole("Vapory Login detected!", redirector.thisMiner.endPoint, ConsoleColor.DarkGreen);
                                 madeChanges = true;
 
                                 Newtonsoft.Json.Linq.JValue val = dyn.@params[0];
@@ -156,7 +156,7 @@ namespace MinerProxy.CoinHandlers
             }
         }
 
-        internal void OnEthServerPacket(byte[] buffer, int length)
+        internal void OnVapServerPacket(byte[] buffer, int length)
         {
             try
             {

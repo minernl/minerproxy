@@ -2,28 +2,28 @@
 
 namespace MinerProxy.JsonProtocols
 {
-    public class EthServerRootObject
+    public class VapServerRootObject
     {
         public int id { get; set; }
         public string jsonrpc { get; set; }
         public List<string> result { get; set; }
     }
 
-    public class EthError
+    public class VapError
     {
         public int code { get; set; }
         public string message { get; set; }
     }
 
-    public class EthServerRootObjectBool
+    public class VapServerRootObjectBool
     {
         public int? id { get; set; }
         public string jsonrpc { get; set; }
         public bool? result { get; set; }
-        public EthError error { get; set; }
+        public VapError error { get; set; }
     }
 
-    public class EthServerRootObjectError
+    public class VapServerRootObjectError
     {
         public int? id { get; set; }
         public string jsonrpc { get; set; }
@@ -31,7 +31,7 @@ namespace MinerProxy.JsonProtocols
         public string error { get; set; }
     }
 
-    public class EthClientRootObject
+    public class VapClientRootObject
     {
         public string worker { get; set; }
         public string jsonrpc { get; set; }
